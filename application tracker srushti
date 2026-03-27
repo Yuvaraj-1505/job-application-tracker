@@ -1,0 +1,165 @@
+import 'package:flutter/material.dart';
+
+class AddApplicationScreen extends StatelessWidget {
+  const AddApplicationScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Add Application"),
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.blue, Colors.purple],
+            ),
+          ),
+        ),
+      ),
+
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            sectionTitle("Company Information"),
+            inputCard(Icons.business, "Company Name"),
+            inputCard(Icons.work, "Position"),
+            inputCard(Icons.location_on, "Location"),
+            inputCard(Icons.attach_money, "Salary Range"),
+
+            sectionTitle("Application Details"),
+            dropdownCard(),
+            dateCard(),
+
+            inputCard(Icons.description, "Job Description", maxLines: 3),
+
+            sectionTitle("Contact Information"),
+            inputCard(Icons.person, "Contact Person"),
+            inputCard(Icons.email, "Contact Email"),
+
+            sectionTitle("Notes"),
+            inputCard(Icons.note, "Additional Notes", maxLines: 4),
+
+            const SizedBox(height: 20),
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(14),
+                  backgroundColor: Colors.purple,
+                ),
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Application Saved Successfully"),
+                    ),
+                  );
+
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "Save Application",
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget sectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget inputCard(IconData icon, String hint, {int maxLines = 1}) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: TextField(
+          maxLines: maxLines,
+          decoration: InputDecoration(
+            icon: Icon(icon, color: Colors.blue),
+            hintText: hint,
+            border: InputBorder.none,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget dropdownCard() {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      child: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 12),
+        child: DropdownButtonFormField<String>(
+          value: "Applied",
+          decoration: InputDecoration(
+            icon: Icon(Icons.flag, color: Colors.blue),
+            border: InputBorder.none,
+          ),
+          items: [
+            DropdownMenuItem(
+              value: "Applied",
+              child: Text("Applied"),
+            ),
+            DropdownMenuItem(
+              value: "Interview",
+              child: Text("Interview"),
+            ),
+            DropdownMenuItem(
+              value: "Offer",
+              child: Text("Offer"),
+            ),
+            DropdownMenuItem(
+              value: "Rejected",
+              child: Text("Rejected"),
+            ),
+          ],
+          onChanged: null,
+        ),
+      ),
+    );
+  }
+
+  Widget dateCard() {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      child: ListTile(
+        leading: const Icon(
+          Icons.calendar_today,
+          color: Colors.blue,
+        ),
+        title: const Text(
+          "Applied Date: 20 Oct 2025",
+        ),
+        onTap: () {},
+      ),
+    );
+  }
+}
